@@ -1,0 +1,27 @@
+h1 タスクの詳細
+
+.nav.jusify-content-end
+  = link_to '一覧', tasks_path, class: 'nav-link'
+table.table.table-hover
+  tbody
+    tr
+      th = Task.human_attribute_name(:id)
+      td = @task.id  
+    tr
+      th = Task.human_attribute_name(:name)
+      td = @task.name
+    tr
+      th = Task.human_attribute_name(:description)
+      td = simple_format(h(@task.description),{}, sanitize: false, wrapper_tag: "div")
+      / simple_formatは、改行文字を含むテキストをブラウザ上で表示させる時に使われるヘルパーになります
+    tr
+      th = Task.human_attribute_name(:created_at)
+      td = @task.created_at
+    tr
+      th = Task.human_attribute_name(:updated_at)
+      td = @task.updated_at
+      
+= link_to '編集', edit_task_path, class: 'btn btn-primary mr-3' 
+/ 一応念の為、indexではedit_task_path(task)としていたがここでは指定していないのは、
+/ 詳細ページにきている段階でどのtaskに関するデータであるかが明示的になっているからである。
+= link_to '削除', task_path, method: :delete, data: { confirm: "タスク「#{@task.name}」を削除します。よろしいですか？"}, class: 'btn btn-danger' 
